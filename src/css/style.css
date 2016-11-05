@@ -1,0 +1,20 @@
+article, textarea {
+    margin-top: 5px;
+}
+
+.btn-default {
+    margin-bottom: 40px;
+}
+
+textarea .form-control:focus {
+    background-color: white;
+}
+
+.timedButton {
+    margin-left: 10%;
+}
+
+.active-title:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
