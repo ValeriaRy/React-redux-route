@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { hashHistory } from "react-router";
+
 import { fetchArticles, deleteArticle, addArticle } from "../actions/articlesActions";
 import AddArticle from './AddArticle';
 import Article from './Article';
@@ -8,33 +8,39 @@ import Article from './Article';
 @connect((store) => {
   return {
     articles: store.articles.articles,
+    user: store.user.user
   };
 })
 
 class Home extends React.Component {
-
-  componentDidMount(articleID) {
+  componentWillMount() {
     this.props.dispatch(fetchArticles());
   }
   
   render () {
-    const { dispatch, articles } = this.props;
+    const { dispatch, articles, user } = this.props;
+    const mappedArticles = articles.map((article, index) => 
+      <Article {...article} 
+      key={index}
+      user={user}
+      onDeleteClick={(id) => dispatch(deleteArticle(id))}
+    />);
     
     if (!articles.length) {
       this.props.dispatch(fetchArticles());
     }
     
-    const mappedArticles = articles.map((article, index) => 
-      <Article {...article}
-      key={index}
-      onDeleteClick={(id) => dispatch(deleteArticle(id))}
-       />);
-    
+    if (user) {
+      var addArticleNode = <AddArticle onAddClick={(title, text, img) =>
+        dispatch(addArticle(title, text, img, user))
+      } />;
+    } else {
+      var addArticleNode = <div></div>;
+    }
+
     return (
       <div>
-        <AddArticle onAddClick={(title, text) =>
-            dispatch(addArticle(title, text))
-        } />
+        {addArticleNode}
         <div>{mappedArticles}</div>
       </div>
     );

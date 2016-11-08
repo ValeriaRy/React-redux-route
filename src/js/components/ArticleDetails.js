@@ -9,25 +9,36 @@ import { getArticle } from "../actions/articlesActions";
 })
 
 class ArticleDetails extends React.Component {
-  componentDidMount(articleID) {
+  componentDidMount() {
+    this.getArticleFromDB();
+  }
+  
+  getArticleFromDB() {
     var hashStr = "#/articleDetails?id=".length;
     var articleID=window.location.hash.substring(hashStr);
     this.props.dispatch(getArticle(articleID));
   }
   
-  render () {
-    
-    const { dispatch, articles } = this.props;
-    
+  render() {
+    const { articles } = this.props;
     var article = articles[0]; 
-    console.log(articles);
 
-    return (
-      <div>
-        <h2>{article.title}</h2>
-        <p>{article.text}</p>
-      </div>
-    );
+    if (!articles.length) {
+      this.getArticleFromDB();
+      return (
+        <div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <p>Author: {article.author}</p>
+          <h2>{article.title}</h2>
+          <img className="img-article" alt={article.title} src={"../" + article.imgPath} />
+          <p>{article.text}</p>
+        </div>
+      );
+    }
   }
 }
 

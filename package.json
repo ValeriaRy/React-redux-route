@@ -22,8 +22,11 @@
     "redux-thunk": "^2.1.0",
     "webpack": "^1.12.9",
     "cors": "^2.8.1",
-    "express": "~3.2.4",
-    "mongodb": "^2.2.11"
+    "express": "^4.14.0",
+    "mongodb": "^2.2.11",
+    "multer": "^1.2.0",
+    "body-parser": "^1.15.2"
+    
   },
   "devDependencies": {
     "babel-preset-react": "^6.16.0",

@@ -12,12 +12,14 @@ export function fetchArticles() {
   };
 }
 
-export function addArticle(title, text) {
+export function addArticle(title, text, img, user) {
   return function(dispatch) {
-    axios.post('https://ghjhj-valeriary.c9users.io/article', {
-      title: title,
-      text: text
-    })
+    var data = new FormData();
+    data.append('img', img);
+    data.append('title', title);
+    data.append('text', text);
+    data.append('author', user);
+    axios.post('https://ghjhj-valeriary.c9users.io/article', data)
       .then((response) => {
         dispatch({type: "ADD_ARTICLE_FULFILLED", payload: response.data});
       })
